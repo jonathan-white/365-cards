@@ -9,13 +9,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
     <!-- Font Awesome -->
-    <!-- <script src="https://use.fontawesome.com/8c698a1a62.js"></script> -->
     <script src="https://use.fontawesome.com/releases/v5.14.0/js/all.js" data-auto-add-css="false"></script>
     <link href="https://use.fontawesome.com/releases/v5.14.0/css/svg-with-js.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="assets/css/style.css">
-
-    <!-- <script src="cards.json"></script> -->
+    <link rel="stylesheet" href="assets/css/screenoverlay.css">
+    <link rel="stylesheet" href="assets/css/mediaqueries.css">
 
     <title>365 Cards by Katherine</title>
     </head>
@@ -24,13 +23,17 @@
             <img class="mission-logo" src="assets/images/365.jpg" alt="">
             <h1>365 Cards by Katherine</h1>
             <div class="title-container">
-                <div class="title"><h2>365 Cards</h2></div>
+                <div class="title"><h1>365 Cards</h1></div>
                 <div class="subtitle"> by Katherine</div>
             </div>
         </div>
         <div class="container-fluid">
             <div class="row images-container"></div>
+            <div class="row more-to-come">Come Back next week for more!</div>
         </div>
+
+        <footer>&copy; 2020 365 Cards</footer>
+        
         <div class="overlay">
             <div class="click-background-to-close"></div>
             <div class="selected-image-container">
@@ -38,7 +41,9 @@
                     <img class="selected-image" src="" alt="Selected Image">
                 </div>
                 <div class="selected-image-description">
+                    <div class="description-title">card title</div>
                     <div class="description-text"></div>
+                    <div class="description-date">date & time</div>
                 </div>
                 <div class="nav-button prev" title="previous">
                     <i class="fas fa-arrow-circle-left"></i>
@@ -52,13 +57,11 @@
             </div>
         </div>
 
-        <footer>
-            &copy; 2020 Jonathan White
-        </footer>
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+        <script src="assets/js/moment.js"></script>
 
         <script src="assets/js/script.js"></script>
 

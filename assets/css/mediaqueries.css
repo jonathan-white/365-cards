@@ -1,0 +1,44 @@
+
+/* Media Queries */
+
+/* Mobile */
+@media (max-width: 850px) {
+
+    .header > h1 {
+       display: none;
+    }
+    
+    .title-container {
+        display: flex;
+        flex-flow: column;
+    }
+
+    .title-container .subtitle {
+        font-weight: 600;
+        color: rgb(138 43 226);
+        font-style: italic;
+    }
+
+    .overlay .selected-image-container {
+        flex-flow: column;
+    }
+
+    .overlay .selected-image-holder {
+        border-bottom-left-radius: 0px;
+    }
+
+    .overlay .selected-image-description {
+        width: initial;
+    }
+}
+
+/* Tablet */
+@media (max-width: 1000px) {
+    .overlay .nav-button.prev {
+        left: -10%;
+    }
+    
+    .overlay .nav-button.next {
+        right: -10%;
+    }   
+}
