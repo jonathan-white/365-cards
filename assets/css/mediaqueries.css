@@ -30,6 +30,18 @@
     .overlay .selected-image-description {
         width: initial;
     }
+
+    .overlay .description-text {
+        padding: 10px;
+        height: 60%;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+
+    .overlay .description-date {
+        bottom: 10px;
+        right: 10px;
+    }
 }
 
 /* Tablet */
