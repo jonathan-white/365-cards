@@ -23,11 +23,13 @@
     }
 
     .overlay .selected-image-holder {
+        border-top-right-radius: 10px;
         border-bottom-left-radius: 0px;
     }
 
     .overlay .selected-image-description {
         width: initial;
+        border-top-right-radius: 0px;
     }
 
     .overlay .description-text {

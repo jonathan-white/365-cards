@@ -38,6 +38,7 @@ body::-webkit-scrollbar-thumb {
 .header .mission-logo {
     position: relative;
     height: 88px;
+    box-shadow: 2px 2px 5px 2px rgba(0 0 0 / 15%);
 }    
 
 .header > h1 {
