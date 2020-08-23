@@ -1,0 +1,30 @@
+extends layout
+
+block content
+    .header
+        img(class='mission-logo',src='/images/365.jpg', alt='')
+        h1=fullTitle
+        .title-container
+            .title: h2=title
+            .subtitle=subtitle
+    .container-fluid
+        div(class='row images-container')
+        div(class='row more-to-come') Come back next week for more!
+
+    footer &copy; 2020 #{title}
+
+    .overlay
+        .click-background-to-close
+        .selected-image-container
+            .selected-image-holder
+                img(class='selected-image' src='' alt='Selected Image')
+            .selected-image-description
+                .description-title
+                .description-text
+                .description-date
+            div(class='nav-button prev' title='previous')
+                i(class='fas fa-arrow-circle-left')
+            div(class='nav-button next' title='next')
+                i(class='fas fa-arrow-circle-right')
+        #close-overlay(class='btn-close-overlay' title='close')
+            i(class='fas fa-time-circle')

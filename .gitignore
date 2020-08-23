@@ -1,0 +1,9 @@
+node_modules
+.DS_store
+
+# Config files
+config/config.js
+.env
+
+# Old files
+public/index.html

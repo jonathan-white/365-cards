@@ -84,6 +84,7 @@ footer {
 .images-container .card-drawing {
     flex-grow: 1;
     padding: 20px;
+    max-width: 295px;
     cursor: pointer;
 }
 
