@@ -1,2 +1,2 @@
-# 365-cards
-365 cards for hospitalized kids. See http://www.cardsforhospitalizedkids.com/ for ways you can get involved.
+# 365 Cards for Hospitalized Kids
+Visit http://www.cardsforhospitalizedkids.com/ to find ways you can get involved.
