@@ -82,11 +82,12 @@ const cards = [
 ];
 
 const imageBaseUrl = "https://storage.googleapis.com/portfolio-f2dfc.appspot.com/cards/";
+let selected_image;
 
 // Generate and display all of the cards.
 for (let i = 0; i < cards.length; i++) {
-    var imageEl = document.createElement("img");
-    var divEl = document.createElement("div");
+    let imageEl = document.createElement("img");
+    let divEl = document.createElement("div");
     
     imageEl.setAttribute('src', imageBaseUrl + cards[i].image);
     imageEl.setAttribute('title', cards[i].title);
@@ -99,10 +100,8 @@ for (let i = 0; i < cards.length; i++) {
     document.querySelector('.images-container').appendChild(divEl);
 }
 
-var selected_image;
-
 // After clicking an image, focus on the image
-$("img").on("click", function(event) {
+$(".card-drawing img").on("click", function(event) {
     selected_image = parseInt($(this).data('card')) - 1;
 
     refreshImage(selected_image);
@@ -139,12 +138,13 @@ $('.nav-button.next').on("click", function(event) {
     refreshImage(selected_image);
 });
 
+// Change the selected Image's details
 const refreshImage = function (selectedImage) {
     $('.selected-image').attr('src', imageBaseUrl + cards[selectedImage].image);
     $('.description-title').text(cards[selectedImage].title); 
     $('.description-text').html(cards[selectedImage].description);
     $('.description-date').text(moment(cards[selectedImage].posted).format("dddd, MMMM Do YYYY")); 
-}
+};
 
 //Prevents the Because I said I would logo from being dragged
 document.querySelector('.mission-logo').ondragstart = () => { return false};

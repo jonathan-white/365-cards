@@ -63,6 +63,7 @@
 }
 
 .overlay .selected-image-description {
+    position: relative;
     display: inline-block;
     flex-grow: 1;
     flex-basis: 30%;
