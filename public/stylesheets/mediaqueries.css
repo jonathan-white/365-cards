@@ -73,3 +73,11 @@
         right: -10%;
     }   
 }
+
+
+/* Tablet */
+@media (min-width: 1246px) {
+    .images-container .card-drawing {
+        max-width: 244px;
+    }
+}
