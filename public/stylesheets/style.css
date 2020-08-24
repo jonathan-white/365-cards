@@ -79,6 +79,7 @@ footer {
     flex-wrap: wrap;
     max-width: 1439px;
     margin: auto;
+    justify-content: center;
 }
 
 .images-container .card-drawing {
