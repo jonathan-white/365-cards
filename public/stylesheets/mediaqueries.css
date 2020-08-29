@@ -76,7 +76,7 @@
 
 
 /* Tablet */
-@media (min-width: 1246px) {
+@media (min-width: 576px) {
     .images-container .card-drawing {
         max-width: 244px;
     }
