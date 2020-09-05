@@ -20,11 +20,13 @@
 
     .overlay .selected-image-container {
         flex-flow: column;
+        height: 70%;
     }
 
     .overlay .selected-image-holder {
         border-top-right-radius: 10px;
         border-bottom-left-radius: 0px;
+        max-height: 360px;
     }
 
     .overlay .selected-image-description {
