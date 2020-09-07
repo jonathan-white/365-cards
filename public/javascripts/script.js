@@ -1,4 +1,5 @@
 const imageBaseUrl = "https://storage.googleapis.com/portfolio-f2dfc.appspot.com/cards/";
+const html = document.documentElement;
 let selected_image;
 
 let cards = [];
@@ -103,12 +104,19 @@ document.querySelector('#search').addEventListener('input', (event) => {
             document.getElementById(cards[i]._id).classList.add('hide');
         }
     }
+
+    const footer = document.querySelector('footer');
+
+    if (html.clientHeight == html.scrollHeight) {
+        footer.style.position = 'fixed';
+    } else {
+        footer.style.position = 'relative';
+    }
 });
 
 var header = document.querySelector('.header');
 var searchBar = document.querySelector('.search-bar');
 var searchBox = document.querySelector('#search');
-// var sticky = searchBar.offsetTop;
 var sticky = header.offsetHeight - (searchBox.offsetHeight / 2);
 
 // Apply the sticky class to the search bar.
