@@ -2,6 +2,7 @@ const imageBaseUrl = "https://storage.googleapis.com/portfolio-f2dfc.appspot.com
 let selected_image;
 
 let cards = [];
+let searchResults = [];
 
 // Fetch cards from database
 fetch('/api/cards/view')
@@ -31,6 +32,7 @@ const displayCards = (listOfCards) => {
         });
     
         divEl.classList.add("col-sm","card-drawing");
+        divEl.setAttribute('id', listOfCards[i]._id);
         divEl.setAttribute('data-cardfor', listOfCards[i].sequence);
         divEl.appendChild(imageEl);
         document.querySelector('.images-container').appendChild(divEl);
@@ -75,5 +77,45 @@ const refreshImagePureJS = (selectedImage) => {
     document.getElementsByClassName('description-date')[0].textContent = moment(cards[selectedImage].posted).format("dddd, MMMM Do YYYY");
 };
 
-//Prevents the Because I said I would logo from being dragged
+// Prevents the Because I said I would logo from being dragged
 document.querySelector('.mission-logo').ondragstart = () => { return false};
+
+// Filter cards that are displayed based on the Search query 
+document.querySelector('#search').addEventListener('input', (event) => {
+    const query = event.target.value.toLowerCase();
+    let resultsIds = [];
+
+    // filter results based on the title or description of a card
+    searchResults = cards.filter(c => c.title.toLowerCase().includes(query) ||
+        c.description.toLowerCase().includes(query) || 
+        c.sequence.includes(query));
+
+    // Add the IDs for the matched cards to a resultsId array
+    for (let i = 0; i < searchResults.length; i++) {
+        resultsIds.push(searchResults[i]._id);
+    }
+
+    //Loop through search results and apply or remove the 'hide' class
+    for (let i = 0; i < cards.length; i++) {
+        if (resultsIds.includes(cards[i]._id)) {
+            document.getElementById(cards[i]._id).classList.remove('hide');
+        } else {
+            document.getElementById(cards[i]._id).classList.add('hide');
+        }
+    }
+});
+
+var header = document.querySelector('.header');
+var searchBar = document.querySelector('.search-bar');
+var searchBox = document.querySelector('#search');
+// var sticky = searchBar.offsetTop;
+var sticky = header.offsetHeight - (searchBox.offsetHeight / 2);
+
+// Apply the sticky class to the search bar.
+window.onscroll = function() {
+    if (window.pageYOffset > sticky) {
+        searchBar.classList.add('sticky');
+    } else {
+        searchBar.classList.remove('sticky');
+    }
+}

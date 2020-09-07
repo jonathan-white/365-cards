@@ -87,6 +87,7 @@ footer {
     padding: 20px;
     max-width: 525px;
     cursor: pointer;
+    margin: 10px;
 }
 
 .images-container .card-drawing:hover {
