@@ -5,6 +5,10 @@ const cardsController = require("../../controllers/cardsController");
 router.route("/add")
   .post(cardsController.addCard);
 
+// Matches with "/api/cards/add-multiple"
+router.route("/add-multiple")
+  .post(cardsController.addManyCards);
+
 // Matches with "/api/cards/view"
 router.route("/view")
   .get(cardsController.findAll)

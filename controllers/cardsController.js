@@ -4,7 +4,7 @@ module.exports = {
   findAll: function(req, res) {
     Card
       .find(req.query)
-      .sort({ dateAdded: 1 })
+      .sort({ sequence: 1 })
       .then(dbModel => res.json(dbModel))
       .catch(err => {
         console.log(err);
@@ -20,6 +20,12 @@ module.exports = {
   addCard: function(req, res) {
     Card
       .create(req.body)
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+  addManyCards: function(req, res) {
+    Card
+      .insertMany(req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
