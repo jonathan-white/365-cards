@@ -1,5 +1,3 @@
-const body = document.body;
-const html = document.documentElement;
 const header = document.querySelector('.header');
 const searchBar = document.querySelector('.search-bar');
 const searchBox = document.querySelector('#search');
@@ -11,8 +9,6 @@ const selectedCardDate = document.getElementsByClassName('description-date')[0];
 function CardManager(){
   this._imageBaseUrl = "https://storage.googleapis.com/portfolio-f2dfc.appspot.com/cards/";
   this._sticky = header.offsetHeight - (searchBox.offsetHeight / 2);
-  this._height = Math.max(body.scrollHeight, body.offsetHeight, 
-    html.clientHeight, html.scrollHeight, html.offsetHeight);
   this._selectedImage = null;
   this._allCards = [];
   this._displayedCards = [];
@@ -21,13 +17,9 @@ function CardManager(){
   this._timeout = null;
 }
 
-// ======= Functions =======
+const manager = new CardManager();
 
-//Check the maximum page height
-CardManager.prototype.calculateHeight = function(){
-   manager._height = Math.max(body.scrollHeight, body.offsetHeight, 
-    html.clientHeight, html.scrollHeight, html.offsetHeight);
-}
+// ======= Functions =======
 
 CardManager.prototype.clearDisplayedcards = () => {
   const listContainer = document.getElementById('img-container');
@@ -61,9 +53,6 @@ CardManager.prototype.displayCards = (listOfCards) => {
     divEl.appendChild(imageEl);
     document.querySelector('.images-container').appendChild(divEl);
   }
-
-  //Obtain the new page height
-  manager.calculateHeight();
 }
 
 // Change the selected Image's details
@@ -75,9 +64,6 @@ CardManager.prototype.refreshCardImage = (selectedImage) => {
 };
 
 CardManager.prototype.lazyLoader = (parentId) => {
-  // once the viewport's bottom position is greater than the position of the 
-  // bottom of the last card; fetch more images
-
   // Find the last card in the image container
   let lastCard = document.getElementById(parentId).lastChild;
   
@@ -103,8 +89,6 @@ CardManager.prototype.lazyLoader = (parentId) => {
     });
   }
 }
-
-const manager = new CardManager();
 
 // ======= Initial API Calls =======
 
