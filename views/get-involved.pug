@@ -1,0 +1,45 @@
+extends layout
+
+block content
+  div(class='header', id='header')
+    img(class='mission-logo',src='/images/365.jpg', alt='')
+    h1=fullTitle
+    .title-container
+      .title: h2=title
+      .subtitle=subtitle
+  .nav-menu
+    ul(class='menu')
+      li(class="menu-item")
+        a(href='/cards') Cards
+      li(class="menu-item active")
+        a(href='/get-involved') Get Involved
+  div(class='container-fluid')
+    .banner-wrapper
+      h2 Here are ways you can get involved...
+    .container-wrapper
+      h3 Cards for Hospitalized Kids
+      .image-content
+        div(class='image i-200')
+          img(src='/images/16998923-1269712513122918-5131543976019195107-n_1_orig.png')
+        .content
+          p Cards for Hospitalized Kids(CFHK) is an internationally recognized charitable organization that spreads hope, joy &amp; magic to hospitalized kids across America through uplifting, handmade cards.
+          p Anyone can get involved with us, from anywhere. Individuals and groups across the United States, and world, donate time and creativity to make handmade cards and send them to us for distribution in hospitals and Ronald McDonald Houses across the nation.
+      
+      a(href='http://www.cardsforhospitalizedkids.com/', target='_blank') 
+        .learn-more Learn More
+
+    .container-wrapper
+      h3 Because I Said I Would
+      .image-content
+        .content
+          p 
+            span(class='impact') Because I said I would
+            |  is a social movement and nonprofit dedicated to the betterment of humanity through promises made and kept. We are changing lives through Promise Cards, chapters of volunteers, character education in schools, and awareness campaigns with global reach.
+
+          p A lot of people don’t keep their promises these days. That might just seem like social commentary, but think about how many people promise to quit smoking, graduate, recycle or volunteer… but then don’t. The consequences of broken promises plague the world. Nothing about that is going to change… unless there is something to change it. That is what we are.
+        div(class='image')
+          img(src='/images/07_local-chapters.jpg')
+      
+      a(href='https://becauseisaidiwould.org/', target='_blank') 
+        .learn-more Learn More
+  footer &copy; 2020 #{title} by Katherine

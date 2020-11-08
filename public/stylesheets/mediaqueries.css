@@ -76,12 +76,24 @@
     }
 
     .overlay .description-date {
-        bottom: 10px;
-        right: 10px;
+      bottom: 10px;
+      right: 10px;
     }
 
     .search-container .search-box {
-        width: 75%;
+      width: 75%;
+    }
+
+    .image-content {
+      flex-flow: column;
+    }
+
+    .image-content .i-200 {
+      width: 100%;
+    }
+
+    .i-200 img {
+      width: 100%;
     }
 }
 

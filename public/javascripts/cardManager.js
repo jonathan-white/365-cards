@@ -8,7 +8,7 @@ const selectedCardDate = document.getElementsByClassName('description-date')[0];
 
 function CardManager(){
   this._imageBaseUrl = "https://storage.googleapis.com/portfolio-f2dfc.appspot.com/cards/";
-  this._sticky = header.offsetHeight - (searchBox.offsetHeight / 2);
+  this._sticky = searchBox ? header.offsetHeight - (searchBox.offsetHeight / 2) : window.pageYOffset+1;
   this._selectedImage = null;
   this._allCards = [];
   this._displayedCards = [];
@@ -130,7 +130,7 @@ document.getElementsByClassName('nav-button prev')[0].addEventListener('click', 
   } else {
     manager._selectedImage = manager._allCards.length - 1;
   }
-  manager.refreshCardImage(selectedImage);
+  manager.refreshCardImage(manager._selectedImage);
 });
 
 // Add onClick event listener to navigate to the next image when the next button is clicked
@@ -178,7 +178,7 @@ document.querySelector('#search').addEventListener('input', (event) => {
 window.onscroll = function() {
   
   // Apply the sticky class to the search bar.
-  if (window.pageYOffset > manager.sticky) {
+  if (window.pageYOffset > manager._sticky) {
     searchBar.classList.add('sticky');
   } else {
     searchBar.classList.remove('sticky');
@@ -187,3 +187,13 @@ window.onscroll = function() {
   // Only load images the user wants to see
   manager.lazyLoader('img-container');
 }
+
+// Add onClick event listener to close the overlay when the close button is clicked
+// document.getElementsByClassName('menu-item').addEventListener('click', function(event){
+//   let targetEl = event.target;
+//   const navItems = document.getElementsByClassName('menu-item');
+//   navItems.forEach(menuItem => {
+//     menuItem.classList.remove('active');
+//   });
+//   targetEl.classList.add('active');
+// });
