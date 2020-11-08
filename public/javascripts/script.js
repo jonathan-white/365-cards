@@ -10,7 +10,6 @@ let selected_image;
 let allCards = [];
 let displayedCards = [];
 let cardsIdList = [];
-let searchResults = [];
 
 let fetchMoreCards = true;
 
@@ -62,7 +61,6 @@ const displayCards = (listOfCards) => {
     imageEl.addEventListener('click', function(event) {
       let targetEl = event.target;
       selected_image = cardsIdList.indexOf(targetEl.getAttribute('data-card'));
-      console.log(`selected_image index: ${selected_image} - Card ID: ${targetEl.getAttribute('data-card')}`);
       
       refreshCardImage(selected_image);
 
@@ -95,7 +93,7 @@ document.getElementsByClassName('nav-button prev')[0].addEventListener('click', 
   if (selected_image > 0) {
     selected_image--;
   } else {
-    selected_image = displayedCards.length - 1;
+    selected_image = allCards.length - 1;
   }
   refreshCardImage(selected_image);
 });
