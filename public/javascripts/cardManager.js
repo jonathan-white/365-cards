@@ -1,55 +1,35 @@
-// ======= Variables & Constants =======
-
-const imageBaseUrl = "https://storage.googleapis.com/portfolio-f2dfc.appspot.com/cards/";
 const body = document.body;
 const html = document.documentElement;
 const header = document.querySelector('.header');
 const searchBar = document.querySelector('.search-bar');
 const searchBox = document.querySelector('#search');
+const selectedCardImage = document.getElementsByClassName('selected-image')[0];  
+const selectedCardTitle = document.getElementsByClassName('description-title')[0];
+const selectedCardText = document.getElementsByClassName('description-text')[0];
+const selectedCardDate = document.getElementsByClassName('description-date')[0];
 
-let sticky = header.offsetHeight - (searchBox.offsetHeight / 2);
-
-let height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, 
-  html.scrollHeight, html.offsetHeight);
-
-let selected_image;
-let allCards = [];
-let displayedCards = [];
-let cardsIdList = [];
-
-let fetchMoreCards = true;
-
-let timeout; //Search bar delay
-
-// ======= Initial API Calls =======
-
-// Fetch all cards from database
-fetch('/api/cards/all')
-  .then(response => response.json())
-  .then(data => {
-    allCards = data;
-    cardsIdList = data.map(c => c.sequence);
-  });
-
-// Fetch the initial batch of cards
-fetch('/api/cards/start')
-  .then(response => response.json())
-  .then(data => {
-      displayCards(data);
-
-      //add new cards to the displayedCards array
-      displayedCards = displayedCards.concat(data);
-  });
+function CardManager(){
+  this._imageBaseUrl = "https://storage.googleapis.com/portfolio-f2dfc.appspot.com/cards/";
+  this._sticky = header.offsetHeight - (searchBox.offsetHeight / 2);
+  this._height = Math.max(body.scrollHeight, body.offsetHeight, 
+    html.clientHeight, html.scrollHeight, html.offsetHeight);
+  this._selectedImage = null;
+  this._allCards = [];
+  this._displayedCards = [];
+  this._cardsIdList = [];
+  this._fetchMoreCards = true;
+  this._timeout = null;
+}
 
 // ======= Functions =======
 
 //Check the maximum page height
-const calculateHeight = () => {
-  height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, 
-    html.scrollHeight, html.offsetHeight);
+CardManager.prototype.calculateHeight = function(){
+   manager._height = Math.max(body.scrollHeight, body.offsetHeight, 
+    html.clientHeight, html.scrollHeight, html.offsetHeight);
 }
 
-const clearDisplayedcards = () => {
+CardManager.prototype.clearDisplayedcards = () => {
   const listContainer = document.getElementById('img-container');
   while (listContainer.firstChild) {
     listContainer.removeChild(listContainer.lastChild);
@@ -57,20 +37,20 @@ const clearDisplayedcards = () => {
 }
 
 // Generate and display all of the cards.
-const displayCards = (listOfCards) => {
+CardManager.prototype.displayCards = (listOfCards) => {
   for (let i = 0; i < listOfCards.length; i++) {
     let imageEl = document.createElement("img");
     let divEl = document.createElement("div");
     
-    imageEl.setAttribute('src', imageBaseUrl + listOfCards[i].image);
+    imageEl.setAttribute('src', manager._imageBaseUrl + listOfCards[i].image);
     imageEl.setAttribute('title', listOfCards[i].title);
     imageEl.setAttribute('alt', listOfCards[i].title);
     imageEl.setAttribute('data-card', listOfCards[i].sequence);
     imageEl.addEventListener('click', function(event) {
       let targetEl = event.target;
-      selected_image = cardsIdList.indexOf(targetEl.getAttribute('data-card'));
+      manager._selectedImage = manager._cardsIdList.indexOf(targetEl.getAttribute('data-card'));
       
-      refreshCardImage(selected_image);
+      manager.refreshCardImage(manager._selectedImage);
 
       document.getElementsByClassName('overlay')[0].classList.add('active');
     });
@@ -83,20 +63,18 @@ const displayCards = (listOfCards) => {
   }
 
   //Obtain the new page height
-  calculateHeight();
+  manager.calculateHeight();
 }
 
 // Change the selected Image's details
-const refreshCardImage = (selected_image) => {
-  document.getElementsByClassName('selected-image')[0].setAttribute('src', imageBaseUrl + allCards[selected_image].image);  
-  document.getElementsByClassName('description-title')[0].textContent = allCards[selected_image].title;
-  document.getElementsByClassName('description-text')[0].innerHTML = allCards[selected_image].description;
-  document.getElementsByClassName('description-date')[0].textContent = moment(allCards[selected_image].posted).format("dddd, MMMM Do YYYY");
+CardManager.prototype.refreshCardImage = (selectedImage) => {
+  selectedCardImage.setAttribute('src', manager._imageBaseUrl + manager._allCards[selectedImage].image);  
+  selectedCardTitle.textContent = manager._allCards[selectedImage].title;
+  selectedCardText.innerHTML = manager._allCards[selectedImage].description;
+  selectedCardDate.textContent = moment(manager._allCards[selectedImage].posted).format("dddd, MMMM Do YYYY");
 };
 
-const lazyLoader = (parentId) => {
-    // == Lazy Loading ==
-  
+CardManager.prototype.lazyLoader = (parentId) => {
   // once the viewport's bottom position is greater than the position of the 
   // bottom of the last card; fetch more images
 
@@ -110,21 +88,44 @@ const lazyLoader = (parentId) => {
   let lastCardPositionBottom = lastCard.offsetTop + lastCard.offsetHeight;
 
   // If the viewport see's the bottom of last card, fetch more cards. 
-  if(viewportPositionBottom > lastCardPositionBottom && fetchMoreCards) {
+  if(viewportPositionBottom > lastCardPositionBottom && manager._fetchMoreCards) {
     fetch('/api/cards/next')
     .then(response => response.json())
     .then(data => {
       //Discontinue fetching cards if no additional results are returned
       if(data.length == 0) {
-        fetchMoreCards = false;
+        manager._fetchMoreCards = false;
       }
-      displayCards(data);
+      manager.displayCards(data);
 
       //add new cards to the displayedCards array
-      displayedCards = displayedCards.concat(data);
+      manager._displayedCards =  manager._displayedCards.concat(data);
     });
   }
 }
+
+const manager = new CardManager();
+
+// ======= Initial API Calls =======
+
+// Fetch all cards from database
+fetch('/api/cards/all')
+  .then(response => response.json())
+  .then(data => {
+    manager._allCards = data;
+    manager._cardsIdList = data.map(c => c.sequence);
+  });
+
+// Fetch the initial batch of cards
+fetch('/api/cards/start')
+  .then(response => response.json())
+  .then(data => {
+    manager.displayCards(data);
+    manager.lazyLoader('img-container');
+
+    //add new cards to the displayedCards array
+    manager._displayedCards = manager._displayedCards.concat(data);
+  });
 
 // ======= Event Listeners =======
 
@@ -140,22 +141,22 @@ document.getElementsByClassName('click-background-to-close')[0].addEventListener
 
 // Add onClick event listener to navigate to the previous image when the previous button is clicked
 document.getElementsByClassName('nav-button prev')[0].addEventListener('click', function(){
-  if (selected_image > 0) {
-    selected_image--;
+  if (manager._selectedImage > 0) {
+    manager._selectedImage--;
   } else {
-    selected_image = allCards.length - 1;
+    manager._selectedImage = manager._allCards.length - 1;
   }
-  refreshCardImage(selected_image);
+  manager.refreshCardImage(selectedImage);
 });
 
 // Add onClick event listener to navigate to the next image when the next button is clicked
 document.getElementsByClassName('nav-button next')[0].addEventListener('click', function(){
-  if (selected_image < allCards.length - 1) {
-    selected_image++;
+  if (manager._selectedImage < manager._allCards.length - 1) {
+    manager._selectedImage++;
   } else {
-    selected_image = 0;
+    manager._selectedImage = 0;
   }
-  refreshCardImage(selected_image);
+  manager.refreshCardImage(manager._selectedImage);
 });
 
 // Prevents the Because I said I would logo from being dragged
@@ -166,26 +167,26 @@ document.querySelector('#search').addEventListener('input', (event) => {
   const query = event.target.value.toLowerCase();
 
   // Don't fetch additional cards while scrolling through search results
-  fetchMoreCards = false;
+  manager._fetchMoreCards = false;
 
   if(query == "") {
-    clearDisplayedcards();
-    displayCards(displayedCards);
-    fetchMoreCards = true;
+    manager.clearDisplayedcards();
+    manager.displayCards(manager._displayedCards);
+    manager._fetchMoreCards = true;
     return;
   }
 
-  if(timeout) {
-    clearTimeout(timeout);
+  if( manager._timeout) {
+    clearTimeout(manager._timeout);
   }
 
-  timeout = setTimeout(function() {
+  manager._timeout = setTimeout(function() {
     // Return cards that match a title, description or sequence #
     fetch(`/api/cards/search?q=${query}`)
       .then(response => response.json())
       .then(searchResults => {
-        clearDisplayedcards();
-        displayCards(searchResults);
+        manager.clearDisplayedcards();
+        manager.displayCards(searchResults);
       });
   }, 500);
 });
@@ -193,12 +194,12 @@ document.querySelector('#search').addEventListener('input', (event) => {
 window.onscroll = function() {
   
   // Apply the sticky class to the search bar.
-  if (window.pageYOffset > sticky) {
+  if (window.pageYOffset > manager.sticky) {
     searchBar.classList.add('sticky');
   } else {
     searchBar.classList.remove('sticky');
   }
 
   // Only load images the user wants to see
-  lazyLoader('img-container');
+  manager.lazyLoader('img-container');
 }
