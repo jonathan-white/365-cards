@@ -5,10 +5,20 @@ module.exports = {
   findAll: function(req, res) {
     Card
       .find({})
+      .sort({ sequence: 1 })
+      .then(dbModel => res.json(dbModel))
+      .catch(err => {
+        console.log(err);
+        res.status(422).json(err);
+      });
+  },
+  startingPage: function(req, res) {
+    Card
+      .find({})
       .limit(8)
       .sort({ sequence: 1 })
       .then(dbModel => {
-        seenIds = seenIds.concat(dbModel.map(item => item._id));
+        seenIds = dbModel.map(item => item._id);
         res.json(dbModel);
       })
       .catch(err => {

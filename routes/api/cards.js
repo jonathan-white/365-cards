@@ -9,9 +9,13 @@ router.route("/add")
 router.route("/add-multiple")
   .post(cardsController.addManyCards);
 
-// Matches with "/api/cards/view"
-router.route("/view")
+// Matches with "/api/cards/all"
+router.route("/all")
   .get(cardsController.findAll)
+
+// Matches with "/api/cards/start"
+router.route("/start")
+.get(cardsController.startingPage)
 
 // Matches with "/api/cards/next"
 router.route("/next")
