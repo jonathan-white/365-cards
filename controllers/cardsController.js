@@ -40,9 +40,23 @@ module.exports = {
         res.status(422).json(err);
       });
   },
-  findCard: function(req, res) {
+  findCardById: function(req, res) {
     Card
       .findById(req.params.id)
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+  findCardsByKeywords: function(req, res) {
+    // console.log("req.params: ", req.params);
+    console.log("req.query: ", req.query);
+    Card
+      .find({ $or:
+        [ 
+          {'sequence': new RegExp(req.query.q,"i")}, 
+          {'title': new RegExp(req.query.q,"i")}, 
+          {'description': new RegExp(req.query.q,"i")} 
+        ]
+      })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

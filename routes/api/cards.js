@@ -11,20 +11,23 @@ router.route("/add-multiple")
 
 // Matches with "/api/cards/all"
 router.route("/all")
-  .get(cardsController.findAll)
+  .get(cardsController.findAll);
 
 // Matches with "/api/cards/start"
 router.route("/start")
-.get(cardsController.startingPage)
+  .get(cardsController.startingPage);
 
 // Matches with "/api/cards/next"
 router.route("/next")
-.get(cardsController.pageNext)
+  .get(cardsController.pageNext);
+  
+router.route("/search")
+  .get(cardsController.findCardsByKeywords);
 
 // Matches with "/api/cards/:id"
 router.route("/:id")
-  .get(cardsController.findCard)
-  .put(cardsController.update)
+  .get(cardsController.findCardById)
+  .put(cardsController.update);
 
 // Matches with "/api/cards/remove/:id"
 router.route("/remove/:id")
