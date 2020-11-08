@@ -3,6 +3,7 @@ const html = document.documentElement;
 let selected_image;
 
 let cards = [];
+let cardsIdList = [];
 let searchResults = [];
 
 // Fetch cards from database
@@ -10,6 +11,7 @@ fetch('/api/cards/view')
     .then(response => response.json())
     .then(data => {
         cards = data;
+        cardsIdList = data.map(c => c.sequence);
         displayCards(data);
     });
 
@@ -25,7 +27,7 @@ const displayCards = (listOfCards) => {
         imageEl.setAttribute('data-card', listOfCards[i].sequence);
         imageEl.addEventListener('click', function(event) {
             let targetEl = event.target;
-            selected_image = parseInt(targetEl.getAttribute('data-card')) - 1;
+            selected_image = cardsIdList.indexOf(targetEl.getAttribute('data-card'));
     
             refreshImagePureJS(selected_image);
     
@@ -71,11 +73,11 @@ document.getElementsByClassName('nav-button next')[0].addEventListener('click', 
 });
 
 // Change the selected Image's details
-const refreshImagePureJS = (selectedImage) => {
-    document.getElementsByClassName('selected-image')[0].setAttribute('src', imageBaseUrl + cards[selectedImage].image);  
-    document.getElementsByClassName('description-title')[0].textContent = cards[selectedImage].title;
-    document.getElementsByClassName('description-text')[0].innerHTML = cards[selectedImage].description;
-    document.getElementsByClassName('description-date')[0].textContent = moment(cards[selectedImage].posted).format("dddd, MMMM Do YYYY");
+const refreshImagePureJS = (selected_image) => {
+    document.getElementsByClassName('selected-image')[0].setAttribute('src', imageBaseUrl + cards[selected_image].image);  
+    document.getElementsByClassName('description-title')[0].textContent = cards[selected_image].title;
+    document.getElementsByClassName('description-text')[0].innerHTML = cards[selected_image].description;
+    document.getElementsByClassName('description-date')[0].textContent = moment(cards[selected_image].posted).format("dddd, MMMM Do YYYY");
 };
 
 // Prevents the Because I said I would logo from being dragged
