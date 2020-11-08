@@ -1,11 +1,30 @@
 const { Card } = require("../models");
+let seenIds = [];
 
 module.exports = {
   findAll: function(req, res) {
     Card
-      .find(req.query)
+      .find({})
+      .limit(8)
       .sort({ sequence: 1 })
-      .then(dbModel => res.json(dbModel))
+      .then(dbModel => {
+        seenIds = seenIds.concat(dbModel.map(item => item._id));
+        res.json(dbModel);
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(422).json(err);
+      });
+  },
+  pageNext: function(req, res) {
+    Card
+      .find({"_id": { "$nin": seenIds}})
+      .limit(8)
+      .sort({ sequence: 1 })
+      .then(dbModel => {
+        seenIds = seenIds.concat(dbModel.map(item => item._id));
+        res.json(dbModel);
+      })
       .catch(err => {
         console.log(err);
         res.status(422).json(err);

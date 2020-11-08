@@ -129,3 +129,14 @@ window.onscroll = function() {
         searchBar.classList.remove('sticky');
     }
 }
+
+document.getElementById('load-images').addEventListener('click', function(){
+// Fetch cards from database after the load-images button has been clicked.
+    fetch('/api/cards/next')
+        .then(response => response.json())
+        .then(data => {
+            cards = data;
+            cardsIdList = data.map(c => c.sequence);
+            displayCards(data);
+        });
+});

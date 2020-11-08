@@ -13,6 +13,10 @@ router.route("/add-multiple")
 router.route("/view")
   .get(cardsController.findAll)
 
+// Matches with "/api/cards/next"
+router.route("/next")
+.get(cardsController.pageNext)
+
 // Matches with "/api/cards/:id"
 router.route("/:id")
   .get(cardsController.findCard)
