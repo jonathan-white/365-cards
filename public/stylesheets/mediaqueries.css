@@ -95,6 +95,14 @@
     .i-200 img {
       width: 100%;
     }
+
+    .image-content .image {
+      width: 100%;
+    }
+    
+    .image img {
+      width: 100%;
+    }
 }
 
 /* Tablet */
