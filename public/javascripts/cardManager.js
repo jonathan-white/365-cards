@@ -187,13 +187,3 @@ window.onscroll = function() {
   // Only load images the user wants to see
   manager.lazyLoader('img-container');
 }
-
-// Add onClick event listener to close the overlay when the close button is clicked
-// document.getElementsByClassName('menu-item').addEventListener('click', function(event){
-//   let targetEl = event.target;
-//   const navItems = document.getElementsByClassName('menu-item');
-//   navItems.forEach(menuItem => {
-//     menuItem.classList.remove('active');
-//   });
-//   targetEl.classList.add('active');
-// });
