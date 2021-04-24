@@ -74,7 +74,7 @@ CardManager.prototype.lazyLoader = (parentId) => {
   let lastCardPositionBottom = lastCard.offsetTop + lastCard.offsetHeight;
 
   // If the viewport see's the bottom of last card, fetch more cards. 
-  if(viewportPositionBottom > lastCardPositionBottom && manager._fetchMoreCards) {
+  if(viewportPositionBottom > lastCardPositionBottom - 300 && manager._fetchMoreCards) {
     fetch('/api/cards/next')
     .then(response => response.json())
     .then(data => {
