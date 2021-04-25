@@ -57,7 +57,7 @@
     border-bottom-left-radius: 10px;
 }
 
-.overlay .selected-image {
+.overlay #selected-image {
     height: 100%;
     width: 100%;
 }

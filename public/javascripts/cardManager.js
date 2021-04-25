@@ -1,13 +1,14 @@
 const header = document.querySelector('.header');
 const searchBar = document.querySelector('.search-bar');
 const searchBox = document.querySelector('#search');
-const selectedCardImage = document.getElementsByClassName('selected-image')[0];  
+const selectedCardImage = document.getElementById('selected-image');  
 const selectedCardTitle = document.getElementsByClassName('description-title')[0];
 const selectedCardText = document.getElementsByClassName('description-text')[0];
 const selectedCardDate = document.getElementsByClassName('description-date')[0];
 
 function CardManager(){
   this._imageBaseUrl = "https://storage.googleapis.com/portfolio-f2dfc.appspot.com/cards/";
+  this._imageCDNBaseUrl = "https://tineropo.sirv.com/365cards/";
   this._sticky = searchBox ? header.offsetHeight - (searchBox.offsetHeight / 2) : window.pageYOffset+1;
   this._selectedImage = null;
   this._allCards = [];
@@ -34,10 +35,12 @@ CardManager.prototype.displayCards = (listOfCards) => {
     let imageEl = document.createElement("img");
     let divEl = document.createElement("div");
     
-    imageEl.setAttribute('src', manager._imageBaseUrl + listOfCards[i].image);
+    imageEl.classList.add('Sirv');
+    // imageEl.setAttribute('src', manager._imageBaseUrl + listOfCards[i].image);
     imageEl.setAttribute('title', listOfCards[i].title);
     imageEl.setAttribute('alt', listOfCards[i].title);
     imageEl.setAttribute('data-card', listOfCards[i].sequence);
+    imageEl.setAttribute('data-src', manager._imageCDNBaseUrl + listOfCards[i].image);
     imageEl.addEventListener('click', function(event) {
       let targetEl = event.target;
       manager._selectedImage = manager._cardsIdList.indexOf(targetEl.getAttribute('data-card'));
@@ -57,7 +60,10 @@ CardManager.prototype.displayCards = (listOfCards) => {
 
 // Change the selected Image's details
 CardManager.prototype.refreshCardImage = (selectedImage) => {
-  selectedCardImage.setAttribute('src', manager._imageBaseUrl + manager._allCards[selectedImage].image);  
+  selectedCardImage.classList.add('Sirv');
+  // selectedCardImage.setAttribute('src', manager._imageBaseUrl + manager._allCards[selectedImage].image); 
+  selectedCardImage.setAttribute('src', manager._imageCDNBaseUrl + manager._allCards[selectedImage].image);
+  selectedCardImage.setAttribute('data-src', manager._imageCDNBaseUrl + manager._allCards[selectedImage].image); 
   selectedCardTitle.textContent = manager._allCards[selectedImage].title;
   selectedCardText.innerHTML = manager._allCards[selectedImage].description;
   selectedCardDate.textContent = moment(manager._allCards[selectedImage].posted).format("dddd, MMMM Do YYYY");
