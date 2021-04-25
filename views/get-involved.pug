@@ -1,6 +1,12 @@
 extends layout
 
 block content
+  .nav-menu
+    ul(class='menu')
+      li(class="menu-item")
+        a(href='/cards') Cards
+      li(class="menu-item active")
+        a(href='/get-involved') Get Involved
   div(class='container-fluid')
     .banner-wrapper
       h2 Here are ways you can get involved...
@@ -30,3 +36,5 @@ block content
       
       a(href='https://becauseisaidiwould.org/', target='_blank') 
         .learn-more Learn More
+
+  include footer.pug

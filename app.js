@@ -24,7 +24,12 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
+const options = {
+  maxAge: 604800000
+}
+
+app.use(express.static(path.join(__dirname, 'public'),options));
 
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
